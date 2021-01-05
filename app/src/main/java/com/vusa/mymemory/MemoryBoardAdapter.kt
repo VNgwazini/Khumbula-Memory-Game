@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.vusa.mymemory.models.BoardSize
 import kotlin.math.min
 
 //subclass of recycler view
-class MemoryBoardAdapter(private val context: Context, private val numPieces: Int) :
+class MemoryBoardAdapter(private val context: Context, private val boardSize: BoardSize) :
         RecyclerView.Adapter<MemoryBoardAdapter.ViewHolder>() {
 
     //singleton where we define constants to be accessed via containing class
@@ -22,10 +23,10 @@ class MemoryBoardAdapter(private val context: Context, private val numPieces: In
 
             //how to create one view of our recycler view
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        //each view created will be half the width of the parent
-        val cardWidth : Int = parent.width / 2 - (2 * MARGIN_SIZE)
-        //each view created will be a quarter of the parent height
-        val cardHeight : Int = parent.height / 4 - (2 * MARGIN_SIZE)
+        //width of this card will be the parent (full screen) divided by the number of board columns
+        val cardWidth : Int = parent.width / boardSize.getWidth() - (2 * MARGIN_SIZE)
+        //height of this card will be the parent (full screen) divided by the number of board rows
+        val cardHeight : Int = parent.height / boardSize.getHeight() - (2 * MARGIN_SIZE)
         val cardSideLength : Int = min(cardWidth, cardHeight)
         val view:View =  LayoutInflater.from(context).inflate(R.layout.memory_card, parent, false)
         //cast layout params to Margin layout Params
@@ -36,8 +37,8 @@ class MemoryBoardAdapter(private val context: Context, private val numPieces: In
         return ViewHolder(view)
     }
 
-    //how many elements are in our recycler view
-    override fun getItemCount() = numPieces
+    //how many elements are in our recycler view based on value passed from boardSize
+    override fun getItemCount() = boardSize.numCards
 
     //taking the data at this section and binding it to the view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
