@@ -9,13 +9,15 @@ import android.widget.ImageButton
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.vusa.mymemory.models.BoardSize
+import com.vusa.mymemory.models.MemoryCard
 import kotlin.math.min
 
 //subclass of recycler view
 class MemoryBoardAdapter(
-    private val context: Context,
-    private val boardSize: BoardSize,
-    private val cardImages: List<Int>
+        private val context: Context,
+        private val boardSize: BoardSize,
+        private val cards: List<MemoryCard>,
+        private val cardClickListener: CardClickListener
 ) :
         RecyclerView.Adapter<MemoryBoardAdapter.ViewHolder>() {
 
@@ -23,6 +25,11 @@ class MemoryBoardAdapter(
     companion object {
         private const val MARGIN_SIZE = 10
         private const val TAG = "MemoryBoardAdapter"
+    }
+
+    //whoever constructs the memory baord adapter will need to pass in an instance of this interface
+    interface CardClickListener {
+        fun onCardClicked(position: Int)
     }
 
             //how to create one view of our recycler view
@@ -52,12 +59,16 @@ class MemoryBoardAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //grab reference to image button in card view
         private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
-        //recognize that we clicked a specific button via its position
+        //recognize that we clicked a specific button via its position so we can tell the interface and update states
         fun bind(position: Int) {
             //set the position of the click to reference the image at that position
-            imageButton.setImageResource(cardImages[position])
+            val memoryCard : MemoryCard = cards[position]
+            //the card should be the default image unless isFaceUp is true then we will use the card's identifier i.e. a unique Int
+            imageButton.setImageResource(if (memoryCard.isFaceUp) memoryCard.identifer else R.drawable.ic_launcher_background)
             imageButton.setOnClickListener{
                 Log.i(TAG, "Clicked on position $position")
+                //invoke on click listener
+                cardClickListener.onCardClicked(position)
             }
         }
     }
