@@ -12,7 +12,11 @@ import com.vusa.mymemory.models.BoardSize
 import kotlin.math.min
 
 //subclass of recycler view
-class MemoryBoardAdapter(private val context: Context, private val boardSize: BoardSize) :
+class MemoryBoardAdapter(
+    private val context: Context,
+    private val boardSize: BoardSize,
+    private val cardImages: List<Int>
+) :
         RecyclerView.Adapter<MemoryBoardAdapter.ViewHolder>() {
 
     //singleton where we define constants to be accessed via containing class
@@ -50,6 +54,8 @@ class MemoryBoardAdapter(private val context: Context, private val boardSize: Bo
         private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
         //recognize that we clicked a specific button via its position
         fun bind(position: Int) {
+            //set the position of the click to reference the image at that position
+            imageButton.setImageResource(cardImages[position])
             imageButton.setOnClickListener{
                 Log.i(TAG, "Clicked on position $position")
             }
