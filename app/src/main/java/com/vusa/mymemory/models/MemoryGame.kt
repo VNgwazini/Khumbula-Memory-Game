@@ -10,6 +10,7 @@ class MemoryGame(private val boardSize: BoardSize) {
     val cards: List<MemoryCard>
     var numPairsFound = 0;
 
+    private var numCardFlips = 0
     private var indexOfSingleSelectedCard: Int? = null
 
     //initializer block
@@ -23,6 +24,7 @@ class MemoryGame(private val boardSize: BoardSize) {
     }
 
     fun flipCard(position: Int) : Boolean {
+        numCardFlips++
         val card : MemoryCard = cards[position]
 
         /*There are 3 cases we need to consider on a card flip
@@ -39,7 +41,7 @@ class MemoryGame(private val boardSize: BoardSize) {
         else {
             //only one card is selected
                 //!! mean don't yell at me for this error mr. compiler
-            val foundMatch : Boolean = checkForMatch(indexOfSingleSelectedCard!!, position)
+            foundMatch = checkForMatch(indexOfSingleSelectedCard!!, position)
             indexOfSingleSelectedCard = null
         }
 
@@ -65,5 +67,19 @@ class MemoryGame(private val boardSize: BoardSize) {
                 card.isFaceUp = false
             }
         }
+    }
+
+    fun haveWonGame(): Boolean {
+        //you've won if you have found all pairs
+        return numPairsFound == boardSize.getNumPairs()
+    }
+
+    fun isCardFaceUp(position: Int): Boolean {
+        return cards[position].isFaceUp
+    }
+
+    fun getNumMoves(): Int {
+        //a complete move is two cards being flipped over
+        return numCardFlips / 2
     }
 }

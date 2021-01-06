@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.vusa.mymemory.models.BoardSize
 import com.vusa.mymemory.models.MemoryCard
 import com.vusa.mymemory.models.MemoryGame
@@ -17,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "MainActivity"
     }
-
+    private lateinit var clRoot: ConstraintLayout
     private lateinit var  rvBoard: RecyclerView
     private lateinit var tvNumMoves: TextView
     private lateinit var tvNumPairs: TextView
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //refrences to rosources i.e. textview and recycle view
+        clRoot = findViewById(R.id.clRoot)
         rvBoard = findViewById(R.id.rvBoard)
         tvNumMoves = findViewById(R.id.tvNumMoves)
         tvNumPairs = findViewById(R.id.tvNumPairs)
@@ -61,8 +64,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateGameWithFlip(position: Int){
-        //flip card at position
-        memoryGame.flipCard(position)
+        //error handling
+        if(memoryGame.haveWonGame())
+        {
+            //alert user that a move is invalid
+            Snackbar.make(clRoot, "You've already won!", Snackbar.LENGTH_SHORT).show()
+            return
+        }
+        if(memoryGame.isCardFaceUp(position))
+        {
+            //alert user that a move is invalid
+            Snackbar.make(clRoot, "Invalid move!", Snackbar.LENGTH_LONG).show()
+            return
+        }
+        if(memoryGame.flipCard(position))
+        {
+            Log.i(TAG, "Found a match! Number of pairs found: ${memoryGame.numPairsFound}")
+            tvNumPairs.text = "Pairs: ${memoryGame.numPairsFound} / ${boardSize.getNumPairs()}"
+            //check if user won the game
+            if (memoryGame.haveWonGame()){
+                //alert user that they have won the game
+                Snackbar.make(clRoot, "You won! Congratulations.", Snackbar.LENGTH_LONG).show()
+            }
+        }
+
+        tvNumMoves.text = "Moves: ${memoryGame.getNumMoves()}"
         //tell the memory board adapter that we flipped a card
         adapter.notifyDataSetChanged()
     }
