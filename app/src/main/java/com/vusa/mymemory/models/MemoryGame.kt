@@ -8,7 +8,9 @@ class MemoryGame(private val boardSize: BoardSize) {
 
     //depending on the board size, the list of chosen images changes
     val cards: List<MemoryCard>
-    val numPairsFound = 0;
+    var numPairsFound = 0;
+
+    private var indexOfSingleSelectedCard: Int? = null
 
     //initializer block
     init {
@@ -20,9 +22,48 @@ class MemoryGame(private val boardSize: BoardSize) {
         cards = randomizedImages.map{ MemoryCard(it) }
     }
 
-    fun flipCard(position: Int) {
+    fun flipCard(position: Int) : Boolean {
         val card : MemoryCard = cards[position]
+
+        /*There are 3 cases we need to consider on a card flip
+        * 0 cards previously flipped over -> restore previously selected cards to default state + flip selected card
+        * 1 cards previously flipped over -> flip selected card + check if match
+        * 2 cards previously flipped over -> restore previously selected cards to default state + flip selected card
+        * */
+        var foundMatch = false
+        if (indexOfSingleSelectedCard == null) {
+            //0 or 2 cards flipped
+            restoreCards()
+            indexOfSingleSelectedCard = position
+        }
+        else {
+            //only one card is selected
+                //!! mean don't yell at me for this error mr. compiler
+            val foundMatch : Boolean = checkForMatch(indexOfSingleSelectedCard!!, position)
+            indexOfSingleSelectedCard = null
+        }
+
         //opposite of whatever it was before
         card.isFaceUp = !card.isFaceUp
+        return foundMatch
+    }
+
+    private fun checkForMatch(position1: Int, position2: Int): Boolean {
+        if (cards[position1].identifer != cards[position2].identifer){
+            return false
+        }
+        cards[position1].isMatched = true
+        cards[position2].isMatched = true
+        numPairsFound++
+        return true
+
+    }
+
+    private fun restoreCards() {
+        for (card : MemoryCard in cards) {
+            if(!card.isMatched){
+                card.isFaceUp = false
+            }
+        }
     }
 }

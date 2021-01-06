@@ -1,12 +1,15 @@
 package com.vusa.mymemory
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vusa.mymemory.models.BoardSize
 import com.vusa.mymemory.models.MemoryCard
@@ -65,6 +68,15 @@ class MemoryBoardAdapter(
             val memoryCard : MemoryCard = cards[position]
             //the card should be the default image unless isFaceUp is true then we will use the card's identifier i.e. a unique Int
             imageButton.setImageResource(if (memoryCard.isFaceUp) memoryCard.identifer else R.drawable.ic_launcher_background)
+
+            //alpha value is for opacity or fade effect
+            //if matched set the alpha to dull of fade
+            //.4f and 1.0f are floats. 1.0 is completely opaque
+            imageButton.alpha = if (memoryCard.isMatched) .4f else 1.0f
+            //make button gray if matched
+            val colorStateList : ColorStateList? = if (memoryCard.isMatched) ContextCompat.getColorStateList(context, R.color.color_gray) else null
+            //adds shading or image background to button
+            ViewCompat.setBackgroundTintList(imageButton, colorStateList)
             imageButton.setOnClickListener{
                 Log.i(TAG, "Clicked on position $position")
                 //invoke on click listener
