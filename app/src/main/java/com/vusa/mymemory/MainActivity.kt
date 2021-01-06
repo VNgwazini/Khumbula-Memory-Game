@@ -10,6 +10,7 @@ import com.vusa.mymemory.models.BoardSize
 import com.vusa.mymemory.models.MemoryCard
 import com.vusa.mymemory.models.MemoryGame
 import com.vusa.mymemory.utils.DEFAULT_ICONS
+import java.text.FieldPosition
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +21,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var  rvBoard: RecyclerView
     private lateinit var tvNumMoves: TextView
     private lateinit var tvNumPairs: TextView
+
+    private lateinit var adapter: MemoryBoardAdapter
+    private lateinit var memoryGame: MemoryGame
+
 
     //initialze boardSize
     private var boardSize: BoardSize = BoardSize.EASY
@@ -40,17 +45,25 @@ class MainActivity : AppCompatActivity() {
         //map each randomized image to a memory card and store them into a list
         val memoryCards : List<MemoryCard> = randomizedImages.map{ MemoryCard(it) }
 
-        val memoryGame = MemoryGame(boardSize)
+        memoryGame = MemoryGame(boardSize)
 
         //define layout to be dynamically set based on screen size
-        rvBoard.adapter = MemoryBoardAdapter(this, boardSize, memoryGame.cards, object: MemoryBoardAdapter.CardClickListener{
+        adapter = MemoryBoardAdapter(this, boardSize, memoryGame.cards, object: MemoryBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
-                Log.i(TAG, "Clicked on position $position")
+                updateGameWithFlip(position)
             }
-
         })
+
+        rvBoard.adapter = adapter
         //makes application effecient by telling the app that the recyclerview size is constant
         rvBoard.setHasFixedSize(true)
         rvBoard.layoutManager = GridLayoutManager(this, boardSize.getWidth())
+    }
+
+    private fun updateGameWithFlip(position: Int){
+        //flip card at position
+        memoryGame.flipCard(position)
+        //tell the memory board adapter that we flipped a card
+        adapter.notifyDataSetChanged()
     }
 }
