@@ -3,16 +3,16 @@ package com.vusa.mymemory.utils
 import com.vusa.mymemory.R
 
 val DEFAULT_ICONS = listOf(
-    R.drawable.ic_face,
-    R.drawable.ic_flower,
-    R.drawable.ic_gift,
-    R.drawable.ic_heart,
-    R.drawable.ic_home,
-    R.drawable.ic_lightning,
-    R.drawable.ic_moon,
-    R.drawable.ic_plane,
-    R.drawable.ic_school,
-    R.drawable.ic_send,
-    R.drawable.ic_star,
-    R.drawable.ic_work
+    R.drawable.ic_black_panther,
+    R.drawable.ic_crocodile,
+    R.drawable.ic_elephant,
+    R.drawable.ic_gazelle,
+    R.drawable.ic_girrafe,
+    R.drawable.ic_gorilla,
+    R.drawable.ic_hippo,
+    R.drawable.ic_lion,
+    R.drawable.ic_monkey,
+    R.drawable.ic_rhino,
+    R.drawable.ic_tiger,
+    R.drawable.ic_zebra
 )
