@@ -18,3 +18,7 @@ Attribution
 ---------------------
 Animal vector images:
 - <a href="https://www.freepik.com/vectors/abstract">Abstract vector created by macrovector - www.freepik.com</a>
+
+Open Source Confetti Library:
+- Confetti: https://github.com/jinatonic/confetti
+
