@@ -20,6 +20,6 @@
             android:background="@color/white"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:srcCompat="?android:attr/colorMultiSelectHighlight" />
     </androidx.cardview.widget.CardView>
 </LinearLayout>
