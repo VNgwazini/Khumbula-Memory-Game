@@ -1,6 +1,7 @@
 package com.vusa.mymemory
 
 import android.animation.ArgbEvaluator
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.jinatonic.confetti.CommonConfetti
 import com.google.android.material.snackbar.Snackbar
 import com.vusa.mymemory.models.BoardSize
 import com.vusa.mymemory.models.MemoryCard
@@ -146,6 +148,8 @@ class MainActivity : AppCompatActivity() {
             if (memoryGame.haveWonGame()){
                 //alert user that they have won the game
                 Snackbar.make(clRoot, "You won! Congratulations.", Snackbar.LENGTH_LONG).show()
+                //Confetti effect on win
+                CommonConfetti.rainingConfetti(clRoot, intArrayOf(Color.YELLOW, Color.GREEN, Color.MAGENTA)).oneShot()
             }
         }
 
