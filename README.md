@@ -22,3 +22,9 @@ Animal vector images:
 Open Source Confetti Library:
 - Confetti: https://github.com/jinatonic/confetti
 
+Digital Design Tool (Icons and Featured Images)
+- https://sketchpad.app/
+
+Image Resizing Tool (Icons and Featured Images):
+- https://promo.com/tools/image-resizer/?utm_campaign=image-resizer-share
+
