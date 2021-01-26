@@ -2,7 +2,7 @@
 Khumbula, meaning "remember" in the Zulu language, is a matching game that serves the goal of sharpening our user’s short-term memory by finding pairs of tiles in the shortest number of moves. I hope you enjoy playing Khumbula as much as I did developing it. 
 
 Play now!
-(Coming soon to the Android Play Store)
+https://play.google.com/store/apps/details?id=com.vusa.mymemory
 
 App UI
 ---------------------
