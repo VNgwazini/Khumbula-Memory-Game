@@ -8,7 +8,7 @@ class MemoryGame(private val boardSize: BoardSize) {
 
     //depending on the board size, the list of chosen images changes
     val cards: List<MemoryCard>
-    var numPairsFound = 0;
+    var numPairsFound = 0
 
     private var numCardFlips = 0
     private var indexOfSingleSelectedCard: Int? = null
@@ -16,16 +16,16 @@ class MemoryGame(private val boardSize: BoardSize) {
     //initializer block
     init {
         //grab the desired number of icons, after randomizing
-        val chosenImages : List<Int> =  DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
+        val chosenImages: List<Int> = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
         //make sure we have two of each image selected
-        val randomizedImages : List<Int> = (chosenImages + chosenImages).shuffled()
+        val randomizedImages: List<Int> = (chosenImages + chosenImages).shuffled()
         //map each randomized image to a memory card and store them into a list
-        cards = randomizedImages.map{ MemoryCard(it) }
+        cards = randomizedImages.map { MemoryCard(it) }
     }
 
-    fun flipCard(position: Int) : Boolean {
+    fun flipCard(position: Int): Boolean {
         numCardFlips++
-        val card : MemoryCard = cards[position]
+        val card: MemoryCard = cards[position]
 
         /*There are 3 cases we need to consider on a card flip
         * 0 cards previously flipped over -> restore previously selected cards to default state + flip selected card
@@ -37,10 +37,9 @@ class MemoryGame(private val boardSize: BoardSize) {
             //0 or 2 cards flipped
             restoreCards()
             indexOfSingleSelectedCard = position
-        }
-        else {
+        } else {
             //only one card is selected
-                //!! mean don't yell at me for this error mr. compiler
+            //!! mean don't yell at me for this error mr. compiler
             foundMatch = checkForMatch(indexOfSingleSelectedCard!!, position)
             indexOfSingleSelectedCard = null
         }
@@ -51,7 +50,7 @@ class MemoryGame(private val boardSize: BoardSize) {
     }
 
     private fun checkForMatch(position1: Int, position2: Int): Boolean {
-        if (cards[position1].identifer != cards[position2].identifer){
+        if (cards[position1].identifier != cards[position2].identifier) {
             return false
         }
         cards[position1].isMatched = true
@@ -62,8 +61,8 @@ class MemoryGame(private val boardSize: BoardSize) {
     }
 
     private fun restoreCards() {
-        for (card : MemoryCard in cards) {
-            if(!card.isMatched){
+        for (card: MemoryCard in cards) {
+            if (!card.isMatched) {
                 card.isFaceUp = false
             }
         }

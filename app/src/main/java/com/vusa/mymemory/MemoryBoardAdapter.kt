@@ -67,7 +67,7 @@ class MemoryBoardAdapter(
             //set the position of the click to reference the image at that position
             val memoryCard : MemoryCard = cards[position]
             //the card should be the default image unless isFaceUp is true then we will use the card's identifier i.e. a unique Int
-            imageButton.setImageResource(if (memoryCard.isFaceUp) memoryCard.identifer else R.color.color_progresss_none)
+            imageButton.setImageResource(if (memoryCard.isFaceUp) memoryCard.identifier else R.color.color_progresss_none)
 
             //alpha value is for opacity or fade effect
             //if matched set the alpha to dull of fade

@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Khumbula Memory Game</string>
+    <string name="pairs">Pairs: %d / %d</string>
+    <string name="moves">Moves: %d</string>
+    <string name="easy_pairs">Pairs: 0 / 4</string>
+    <string name="easy_moves">Easy: 4 x 2</string>
+    <string name="medium_pairs">Pairs: 0 / 9</string>
+    <string name="medium_moves">Medium: 6 x 3</string>
+    <string name="hard_pairs">Pairs: 0 / 12</string>
+    <string name="hard_moves">Hard: 6 x 12</string>
+    <string name="quit">Quit your current game?</string>
+    <string name="you_won">You won! Congratulations.</string>
+    <string name="already_won">You\'ve already won!</string>
+    <string name="found_match">Found a match! Number of pairs found: %d</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="choose_new_size">Choose new size</string>
+    <string name="invalid_move">Invalid move!</string>
 </resources>
